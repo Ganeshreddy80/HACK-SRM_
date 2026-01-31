@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>AI Content Guard</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="card">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <h1> AI Content Detector</h1>
+            <button onclick="window.location.href='s.html'"
+                style="width: auto; padding: 8px 15px; background: #dc3545; font-size: 14px;">Logout</button>
+        </div>
+        <p>Analyze Images, Videos, or Audio for AI manipulation</p>
+
+        <select id="mediaType">
+            <option value="image">Detect AI Image</option>
+            <option value="video">Detect AI Video</option>
+            <option value="audio">Detect AI Audio</option>
+        </select>
+
+        <input type="file" id="fileInput">
+        <button onclick="processMedia()">Analyze Now</button>
+
+        <div id="result-container">
+            <div id="verdict" class="verdict-text"></div>
+            <div id="percentage" class="percent-text"></div>
+        </div>
+    </div>
+
+    <script>
+        async function processMedia() {
+            const type = document.getElementById('mediaType').value;
+            const fileInput = document.getElementById('fileInput');
+            const resultBox = document.getElementById('result-container');
+            const verdictDiv = document.getElementById('verdict');
+            const percentDiv = document.getElementById('percentage');
+
+            if (!fileInput.files[0]) return alert("Please select a file!");
+
+            resultBox.style.display = "block";
+            resultBox.style.background = "#f8f9fa";
+            verdictDiv.innerText = " Analyzing...";
+            percentDiv.innerText = "";
+
+            const formData = new FormData();
+            formData.append('file', fileInput.files[0]);
+
+            try {
+                const response = await fetch(`http://127.0.0.1:8000/detect-${type}`, {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const data = await response.json();
+
+                // Logic to extract the specific score based on type
+                let score = 0;
+                if (type === 'image') score = data.type.ai_generated;
+                else if (type === 'video') score = data.data.classes.ai_generated;
+                else if (type === 'audio') score = data.is_ai_generated;
+
+                const finalPercent = (score * 100).toFixed(2);
+
+                if (score > 0.5) {
+                    verdictDiv.innerText = " VERDICT: AI GENERATED";
+                    verdictDiv.style.color = "#dc3545";
+                    resultBox.style.background = "#fff5f5";
+                } else {
+                    verdictDiv.innerText = " VERDICT: REAL CONTENT";
+                    verdictDiv.style.color = "#28a745";
+                    resultBox.style.background = "#f6fff6";
+                }
+
+                percentDiv.innerText = `AI Probability Score: ${finalPercent}%`;
+
+            } catch (err) {
+                verdictDiv.innerText = " Connection Error";
+                percentDiv.innerText = "Make sure your Python backend is running!";
+                verdictDiv.style.color = "black";
+            }
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Sign In - AI Content Guard</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="card">
+        <h1>Welcome Back</h1>
+        <p>Sign in to continue analyzing media.</p>
+        <form id="loginForm">
+            <input type="email" id="email" placeholder="Email Address" required>
+            <input type="password" id="password" placeholder="Password" required>
+            <button type="submit">Sign In</button>
+            <p id="message" style="color: red; font-weight: bold;"></p>
+        </form>
+        <a href="signup.html" class="auth-link">Don't have an account? Sign Up</a>
+    </div>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', async function (e) {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const msg = document.getElementById('message');
+
+            msg.innerText = "Logging in...";
+            msg.style.color = "blue";
+
+            try {
+                const response = await fetch('http://127.0.0.1:8000/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password })
+                });
+
+                if (response.ok) {
+                    msg.style.color = "green";
+                    msg.innerText = "Login Successful! Redirecting...";
+                    setTimeout(() => window.location.href = 'index.html', 1000);
+                } else {
+                    msg.style.color = "red";
+                    msg.innerText = "Wrong Credentials! Try again.";
+                }
+            } catch (err) {
+                msg.style.color = "red";
+                msg.innerText = "Connection error. Is backend running?";
+            }
+        });
+    </script>
+</body>
+
+</html>
