@@ -1,0 +1,115 @@
+Prompt Documentation
+AI-Generated & Manipulated Media Detection Platform
+Project Overview
+
+This project focuses on building a web-based platform to detect AI-generated and manipulated images, videos, and audio using a modular, secure, and scalable architecture. The system emphasizes probabilistic risk assessment, transparency, and real-time usability for digital platforms.
+
+Technology Stack
+
+Frontend: React + Vite (Apple-inspired UI)
+
+Backend: Node.js + Express
+
+Authentication: Token-based API access
+
+Database: MySQL with Prisma ORM
+
+Deployment: Cloud-hosted frontend and backend services
+
+Task-Based Prompt Documentation
+Task 1: Frontend Development (React + Vite, Apple-Style UI)
+Prompt
+
+Build a premium, Apple-inspired frontend UI for a web platform that detects AI-generated and manipulated images, videos, and audio.
+
+Use React + Vite for frontend development only.
+
+Design a clean, minimal interface with white space, soft shadows, rounded corners, and modern typography.
+
+Implement the following pages:
+
+Landing page with a clear problem statement and a single “Analyze Media” call-to-action
+
+Upload page supporting images, short videos, and audio files with drag-and-drop functionality
+
+Analysis state with a subtle loading animation and reassurance about data privacy
+
+Results page showing AI-likelihood percentage, confidence level, and a short explanation
+
+Focus entirely on UI/UX clarity, responsiveness, and demo-readiness. No backend logic or authentication handling.
+
+Task 2: Media Upload & API Integration Layer
+Prompt
+
+Create a stable frontend-to-backend integration layer for uploading and analyzing images, videos, and audio files.
+
+Automatically detect media type after upload and validate file size, format, and duration before sending requests.
+
+Communicate with a Node.js + Express backend using a single analysis endpoint.
+
+Handle asynchronous requests, show upload and analysis progress, prevent duplicate submissions, and display clear error messages.
+
+Ensure no page reloads, no UI blocking, and graceful handling of network or backend failures.
+
+Focus on reliability and predictable demo behavior rather than feature expansion.
+
+Task 3: Backend Detection Pipeline with Authentication (Node.js + Express)
+Prompt
+
+Design a secure backend detection pipeline that authenticates requests and analyzes images, videos, and audio to assess AI-generated or manipulated content.
+
+Implement token-based authentication to protect analysis endpoints. Only authenticated requests should be processed.
+
+Automatically identify media type and route each file to its respective detection pipeline:
+
+Images: visual artifacts, texture repetition, lighting inconsistencies
+
+Videos: frame-to-frame inconsistencies, facial stability, temporal anomalies
+
+Audio: spectral patterns, acoustic smoothness, timing irregularities
+
+Generate probabilistic outputs including AI-likelihood percentage, confidence level, and plain-English explanations.
+
+Ensure fast, non-blocking processing and graceful handling of invalid files or authentication failures.
+
+Task 4: Database, Logging & Audit Layer (MySQL + Prisma ORM)
+Prompt
+
+Design a privacy-aware persistence layer using MySQL with Prisma ORM to store analysis metadata and system logs.
+
+Store only essential information:
+
+Request ID
+
+Auth token or user reference (non-sensitive)
+
+Media type and file metadata
+
+AI-likelihood score and confidence level
+
+Detection summary
+
+Timestamps
+
+Log successful and failed analysis attempts, authentication failures, and backend errors.
+
+Do not store raw media files or personal user data.
+
+Use Prisma for schema management, consistency, and future migrations.
+
+Focus on traceability, reliability, and compliance-friendly design.
+
+Task 5: Deployment, Testing & Demo Readiness
+Prompt
+
+Deploy the complete system (frontend, backend, database) as publicly accessible services suitable for hackathon demonstration.
+
+Ensure secure configuration using environment variables and stable frontend–backend communication.
+
+Test the full workflow: upload → analysis → result for images, videos, and audio.
+
+Validate error handling, authentication failures, and invalid inputs.
+
+Optimize for fast response times and predictable behavior under demo conditions.
+
+Prepare a repeatable demo flow with pre-tested media and fallback messaging for failures.
